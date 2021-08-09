@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const App = (props) => {
 
   const [state, setState] = useState(props);
   const {name, price} = state
 
+  // useEffectはJSXがレンダリングされた後で実施される
+  useEffect(() => {
+    console.log('This is like componentDidMount or componentDidUpdate.')
+  })
+
+  useEffect(() => {
+    console.log('This callback is for name only.')
+  }, [name])
+
+
   const plus = () => setState({...state, price: state.price + 1})
   const minus = () => setState({...state, price: state.price - 1})
   const reset = () => setState(props)
-
-  console.log(state)
 
   return (
     <>
