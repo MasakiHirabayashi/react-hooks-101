@@ -44,9 +44,9 @@ const events = (state = [], action) => {
       // 登録済みのイベント数
       const length = state.length
       // 新規登録するイベントオブジェクトにIDを付与する
-      const id = length === 0 ? 1 : id = state[length -1].id + 1
+      const id = length === 0 ? 1 : state[length -1].id + 1
       // 状態遷移後の配列を返却
-      return [...state, { id /*id: idと同義 */, ...event }];
+      return [...state, { id, ...event }];
     case "DELETE_EVENT":
       return state;
     case "DELETE_ALL_EVENTS":
