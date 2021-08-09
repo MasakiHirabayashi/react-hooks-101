@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useReducer, useState } from "react";
 
 import reducer from "../reducers/";
-import Event from "./Event"
+import Event from "./Event";
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, []);
@@ -26,6 +26,12 @@ const App = () => {
     console.log({ state });
   }, [state]);
 
+  const deleteAllEvents = (e) => {
+    e.preventDefault();
+    const result = window.confirm('すべてのイベントを削除してよろしいですか？')
+    if (result) dispatch({ type: "DELETE_ALL_EVENTS" });
+  };
+
   return (
     <div className="container-fluid">
       <h4>イベント作成フォーム</h4>
@@ -48,10 +54,20 @@ const App = () => {
             onChange={(e) => setBody(e.target.value)}
           />
         </div>
-        <button className="btn btn-primary" onClick={addEvent}>
+        <button
+          className="btn btn-primary"
+          onClick={addEvent}
+          disabled={title === "" || body === ""}
+        >
           イベントを作成する
         </button>
-        <button className="btn btn-danger">すべてのイベントを削除する</button>
+        <button
+          className="btn btn-danger"
+          onClick={deleteAllEvents}
+          disabled={state.length === 0}
+        >
+          すべてのイベントを削除する
+        </button>
       </form>
 
       <h4>イベント一覧</h4>
@@ -65,8 +81,9 @@ const App = () => {
           </tr>
         </thead>
         <tbody>
-          {state.map((e) => (<Event key={e.id} event={e} dispatch={dispatch} />))}
-          
+          {state.map((e) => (
+            <Event key={e.id} event={e} dispatch={dispatch} />
+          ))}
         </tbody>
       </table>
     </div>
