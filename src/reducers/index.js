@@ -42,13 +42,14 @@ const events = (state = [], action) => {
     case "CREATE_EVENT":
       const event = { title: action.title, body: action.body };
       // 登録済みのイベント数
-      const length = state.length
+      const length = state.length;
       // 新規登録するイベントオブジェクトにIDを付与する
-      const id = length === 0 ? 1 : state[length -1].id + 1
+      const id = length === 0 ? 1 : state[length - 1].id + 1;
       // 状態遷移後の配列を返却
       return [...state, { id, ...event }];
     case "DELETE_EVENT":
-      return state;
+      // actionで渡されたidのオブジェクトを配列から削除する
+      return state.filter(e => e.id !== action.id);
     case "DELETE_ALL_EVENTS":
       return [];
     default:

@@ -2,11 +2,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useReducer, useState } from "react";
 
 import reducer from "../reducers/";
+import Event from "./Event"
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, []);
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
 
   const addEvent = (e) => {
     e.preventDefault();
@@ -14,16 +15,16 @@ const App = () => {
     dispatch({
       type: "CREATE_EVENT",
       title,
-      body
+      body,
     });
 
-    setTitle('')
-    setBody('')
+    setTitle("");
+    setBody("");
   };
 
   useEffect(() => {
-    console.log({state})
-  }, [state])
+    console.log({ state });
+  }, [state]);
 
   return (
     <div className="container-fluid">
@@ -63,7 +64,10 @@ const App = () => {
             <th></th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {state.map((e) => (<Event key={e.id} event={e} dispatch={dispatch} />))}
+          
+        </tbody>
       </table>
     </div>
   );
