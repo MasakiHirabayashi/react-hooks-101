@@ -2,15 +2,14 @@ import { useState } from "react";
 
 const App = (props) => {
 
-  const [name, setName] = useState(props.name);
-  const [price, setPrice] = useState(props.price);
+  const [state, setState] = useState(props);
+  const {name, price} = state
 
-  const plus = () => setPrice(price + 1)
-  const minus = () => setPrice(price - 1)
-  const reset = () => {
-    setPrice(props.price)
-    setName(props.name)
-  }
+  const plus = () => setState({...state, price: state.price + 1})
+  const minus = () => setState({...state, price: state.price - 1})
+  const reset = () => setState(props)
+
+  console.log(state)
 
   return (
     <>
@@ -20,7 +19,7 @@ const App = (props) => {
       <button onClick={plus}> +1 </button>
       <button onClick={minus}> -1 </button>
       <button onClick={reset}> reset </button>
-      <input value={ name } onChange={(e) => setName(e.target.value)}></input>
+      <input value={ name } onChange={(e) => setState({...state, name: e.target.value})}></input>
     </>
   );
 };
